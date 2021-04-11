@@ -10,16 +10,6 @@ import org.springframework.kafka.annotation.EnableKafkaStreams;
 @EnableKafkaStreams
 public class VacinagoraServerApplication {
 
-//	@Bean
-//	NewTopic quotes() {
-//		return new NewTopic("quotes", 6, (short) 1);
-//	}
-//
-//	@Bean
-//	NewTopic counts() {
-//		return new NewTopic("counts", 6, (short) 1);
-//	}
-
 	@Bean
 	NewTopic positions() {
 		return new NewTopic("positions", 6, (short) 1);
@@ -31,8 +21,13 @@ public class VacinagoraServerApplication {
 	}
 
 	@Bean
-	NewTopic warehouse() {
-		return new NewTopic("warehouse", 6, (short) 1);
+	NewTopic positionEvents() {
+		return new NewTopic("position_events", 6, (short) 1);
+	}
+
+	@Bean
+	NewTopic placesCount() {
+		return new NewTopic("places_count", 6, (short) 1);
 	}
 
 	public static void main(String[] args) {

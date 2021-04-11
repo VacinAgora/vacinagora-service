@@ -1,13 +1,13 @@
 package com.vacinagora.vacinagora_server.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vacinagora.vacinagora_server.models.Place;
-import com.vacinagora.vacinagora_server.models.PlaceDto;
 import com.vacinagora.vacinagora_server.models.Position;
+import com.vacinagora.vacinagora_server.models.PositionEvent;
 import com.vacinagora.vacinagora_server.service.Producer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/kafka/publish")
@@ -15,8 +15,7 @@ public class KafkaController {
 
     private final Producer producer;
 
-    @Autowired
-    KafkaController(final Producer producer) {
+    KafkaController(Producer producer) {
         this.producer = producer;
     }
 
@@ -26,17 +25,13 @@ public class KafkaController {
     }
 
     @PostMapping(value = "/places")
-    public void sendMessageToGeofenceKafkaTopic(@RequestBody PlaceDto placeDto) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String geometryJson = "";
-        try {
-            geometryJson = objectMapper.writeValueAsString(placeDto.getGeometry());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void sendMessageToGeofenceKafkaTopic(@RequestBody Place place) {
+        this.producer.sendPlace(place);
+    }
 
-        Place place = new Place(placeDto.getPlaceId(), geometryJson);
-        this.producer.sendGeofence(place);
+    @PostMapping(value = "/events")
+    public void sendMessageToWarehouseKafkaTopic(@RequestBody PositionEvent event) {
+        this.producer.sendPositionEvent(event);
     }
 
 }

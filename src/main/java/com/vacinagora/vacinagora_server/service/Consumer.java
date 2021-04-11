@@ -1,25 +1,22 @@
 package com.vacinagora.vacinagora_server.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.vacinagora.vacinagora_server.models.Place;
+import com.vacinagora.vacinagora_server.tile38.Tile38Service;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 public class Consumer {
 
-    private final Logger logger = LoggerFactory.getLogger(Producer.class);
+    private final Tile38Service tile38Service;
 
-    @KafkaListener(topics = "warehouse")
-    public void consume(String message) throws IOException {
-        logger.info(String.format("#### -> Consumed message -> %s", message));
+    public Consumer(Tile38Service tile38Service) {
+        this.tile38Service = tile38Service;
     }
 
-//    @KafkaListener(topics = "users", groupId = "group_id")
-//    public void consume(String message) throws IOException {
-//        logger.info(String.format("#### -> Consumed message -> %s", message));
-//    }
+    @KafkaListener(topics = "places", groupId = "group_id")
+    public void consume(Place place) {
+        tile38Service.createPositionHook(place);
+    }
 
 }

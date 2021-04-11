@@ -7,14 +7,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Place {
+public class PlaceCount {
 
-    private String placeId;
+    private String hook;
 
-    private Double latitude;
-
-    private Double longitude;
-
-    private String size;
+    private long count;
 
 }

@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class PlaceDto {
+public class MapObject {
 
-    private String placeId;
+    private String type;
 
-    private Object geometry;
+    private List<Double> coordinates;
 
 }
