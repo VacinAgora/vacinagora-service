@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vacinagora.vacinagora_server.models.MapObject;
 import com.vacinagora.vacinagora_server.models.Place;
 import com.vacinagora.vacinagora_server.tile38.Tile38Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.UncheckedIOException;
 import java.util.List;
@@ -31,8 +29,8 @@ public class PlacesController {
             MapObject mapObject = new ObjectMapper().readValue(placeString, MapObject.class);
 
             List<Double> coordinates = mapObject.getCoordinates();
-            Double latitude = coordinates.get(0);
-            Double longitude = coordinates.get(1);
+            Double longitude = coordinates.get(0);
+            Double latitude = coordinates.get(1);
 
             return new Place(placeId, latitude, longitude, "");
         } catch (JsonProcessingException e) {
@@ -47,6 +45,12 @@ public class PlacesController {
         return rawPlaces.stream()
                 .map(this::getPlace)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public void sendMessageToGeofenceKafkaTopic(@RequestBody Place place) {
+        tile38Service.createPlace(place);
+        tile38Service.createPositionHook(place);
     }
 
 }

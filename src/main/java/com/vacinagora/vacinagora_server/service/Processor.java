@@ -19,7 +19,7 @@ class Processor {
         final Serde<PositionEvent> positionEventSerde = CustomSerdes.PositionEvent();
 //        final Serde<PlaceCount> placeCountSerde = CustomSerdes.PlaceCount();
 
-        builder.stream("position_events", Consumed.with(stringSerde, positionEventSerde))
+        builder.stream("places_count", Consumed.with(stringSerde, positionEventSerde))
                 .print(Printed.toSysOut());
 
 //        final KTable<String, PlaceCount> counts = source

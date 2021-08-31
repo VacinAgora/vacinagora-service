@@ -1,6 +1,5 @@
 package com.vacinagora.vacinagora_server.controller;
 
-import com.vacinagora.vacinagora_server.models.Place;
 import com.vacinagora.vacinagora_server.models.Position;
 import com.vacinagora.vacinagora_server.models.PositionEvent;
 import com.vacinagora.vacinagora_server.service.Producer;
@@ -24,10 +23,10 @@ public class KafkaController {
         this.producer.sendPosition(position);
     }
 
-    @PostMapping(value = "/places")
-    public void sendMessageToGeofenceKafkaTopic(@RequestBody Place place) {
-        this.producer.sendPlace(place);
-    }
+//    @PostMapping(value = "/places")
+//    public void sendMessageToGeofenceKafkaTopic(@RequestBody Place place) {
+//        this.producer.sendPlace(place);
+//    }
 
     @PostMapping(value = "/events")
     public void sendMessageToWarehouseKafkaTopic(@RequestBody PositionEvent event) {

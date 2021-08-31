@@ -16,11 +16,6 @@ public class VacinagoraServerApplication {
 	}
 
 	@Bean
-	NewTopic places() {
-		return new NewTopic("places", 6, (short) 1);
-	}
-
-	@Bean
 	NewTopic positionEvents() {
 		return new NewTopic("position_events", 6, (short) 1);
 	}

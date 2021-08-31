@@ -14,9 +14,9 @@ public class Consumer {
         this.tile38Service = tile38Service;
     }
 
-    @KafkaListener(topics = "places", groupId = "group_id")
-    public void consume(Place place) {
-        tile38Service.createPositionHook(place);
-    }
+//    @KafkaListener(topics = "places", groupId = "group_id")
+//    public void consume(Place place) {
+//        tile38Service.createPositionHook(place);
+//    }
 
 }
